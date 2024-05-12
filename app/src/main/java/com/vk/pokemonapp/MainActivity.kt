@@ -14,12 +14,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.vk.pokemonapp.domain.GetInfoPokemonUseCase
 import com.vk.pokemonapp.domain.GetListPokemonUseCase
 import com.vk.pokemonapp.network.repository.PokemonListRepository
 import com.vk.pokemonapp.presenter.screen.PokemonInfoScreen
 import com.vk.pokemonapp.presenter.screen.PokemonListScreen
 import com.vk.pokemonapp.presenter.vm.PokemonInfoScreenVM
 import com.vk.pokemonapp.presenter.vm.PokemonListScreenVM
+import com.vk.pokemonapp.presenter.vm.factory.PokemonInfoScreenVMFactory
 import com.vk.pokemonapp.presenter.vm.factory.PokemonListScreenVMFactory
 import com.vk.pokemonapp.ui.theme.PokemonAppTheme
 
@@ -29,7 +31,7 @@ class MainActivity : ComponentActivity() {
     lateinit var listScreenVMFactory: PokemonListScreenVMFactory
 
     lateinit var infoScreenVM: PokemonInfoScreenVM
-    lateinit var infoScreenVMFactory: PokemonListScreenVMFactory
+    lateinit var infoScreenVMFactory: PokemonInfoScreenVMFactory
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +46,14 @@ class MainActivity : ComponentActivity() {
         )
         listScreenVM = ViewModelProvider(this, listScreenVMFactory)
             .get(PokemonListScreenVM::class.java);
+
+
+        infoScreenVMFactory = PokemonInfoScreenVMFactory(
+            GetInfoPokemonUseCase(),
+            PokemonListRepository()
+        )
+        infoScreenVM = ViewModelProvider(this, infoScreenVMFactory)
+            .get(PokemonInfoScreenVM::class.java);
 
 
         setContent {
@@ -65,7 +75,8 @@ class MainActivity : ComponentActivity() {
                         composable("pokemon_info/{id}") {
                             id ->
                            val pokemonId = id.arguments?.getString("id")
-                            PokemonInfoScreen(listScreenVM, id = pokemonId) { navController.navigate(it) };
+                            PokemonInfoScreen(infoScreenVM,
+                                id = pokemonId)
                         }
                     }
 

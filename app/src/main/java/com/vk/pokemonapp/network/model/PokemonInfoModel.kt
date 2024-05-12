@@ -1,5 +1,6 @@
 package com.vk.pokemonapp.network.model
 
+import android.icu.text.ListFormatter.Width
 import com.google.gson.annotations.SerializedName
 
 
@@ -23,6 +24,8 @@ data class Stat(
 data class PokemonInfoModel(
     val stats:List<StatResponse>,
     val cryResponse: CryResponse,
+    val id: Int,
     val height:String,
-    val weight:String
+    val width:String,
+    val name:String
 )

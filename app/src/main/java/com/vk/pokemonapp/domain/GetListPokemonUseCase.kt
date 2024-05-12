@@ -6,10 +6,6 @@ import com.vk.pokemonapp.network.repository.PokemonListRepository
 
 class GetListPokemonUseCase {
 
-    // Value start
-    // Value Step
-    //
-
 
     fun getPokemonList(repository: PokemonListRepository,
                        offset: Int,

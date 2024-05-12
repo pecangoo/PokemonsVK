@@ -6,6 +6,7 @@ import com.vk.pokemonapp.domain.GetListPokemonUseCase
 import com.vk.pokemonapp.network.repository.PokemonListRepository
 import com.vk.pokemonapp.presenter.Mappers
 import com.vk.pokemonapp.presenter.screen.states.PokemonListUIState
+import com.vk.pokemonapp.presenter.utils.LinkMaker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +16,6 @@ import kotlinx.coroutines.launch
 
 class PokemonListScreenVM(
     val networkUseCase: GetListPokemonUseCase,
-    //val getInfoPokemonUseCase: GetInfoPokemonUseCase,
     val repository: PokemonListRepository
 ) : ViewModel() {
 
@@ -30,7 +30,6 @@ class PokemonListScreenVM(
         if(!isNew) {
             offset = offset + limit
         }
-
         viewModelScope.launch (Dispatchers.IO)  {
             val data = networkUseCase
                 .getPokemonList(
@@ -45,10 +44,7 @@ class PokemonListScreenVM(
         }
     }
 
-    fun returnImgLink(id:Int) : String {
-
-        // TODO: Добавить в стринги
-        return "https://raw.githubusercontent.com" +
-                "/PokeAPI/sprites/master/sprites/pokemon/${id}.png"
+    fun returnImgLink(id:String) : String {
+        return LinkMaker.returnImgLink(id)
     }
 }

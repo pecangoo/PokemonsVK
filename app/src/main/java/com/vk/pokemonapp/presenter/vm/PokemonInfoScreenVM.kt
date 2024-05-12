@@ -1,10 +1,10 @@
 package com.vk.pokemonapp.presenter.vm
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vk.pokemonapp.domain.GetInfoPokemonUseCase
 import com.vk.pokemonapp.network.repository.PokemonListRepository
-import com.vk.pokemonapp.presenter.Mappers
 import com.vk.pokemonapp.presenter.screen.states.PokemonInfoUIState
 import com.vk.pokemonapp.presenter.screen.states.PokemonListUIState
 import kotlinx.coroutines.Dispatchers
@@ -25,16 +25,21 @@ class PokemonInfoScreenVM(
     fun getInfoPokemon(id:String) {
 
         viewModelScope.launch (Dispatchers.IO)  {
+            _uiState.emit(_uiState.value.copy(loading = true))
+
+            uiState.value.loading = true;
             getInfoPokemonUseCase.getPokemonInfo(repository = repository,
                 idPokemon = id)
 
-
             _uiState.update {
-//                 currentState ->
-//                    currentState.copy(
-//                        //listPokemon = currentState.listPokemon
-//                    )
+                 currentState ->
+                    currentState.copy(
+                        pokemonInfoModel = currentState.pokemonInfoModel,
+                        loading = false
+                    )
             }
+
+
         }
     }
 }

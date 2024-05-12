@@ -36,7 +36,7 @@ import com.vk.pokemonapp.presenter.vm.PokemonListScreenVM
 @Composable
 fun PokemonListScreen(listScreenVM: PokemonListScreenVM,
                       onClickNav: (String) -> Unit) {
-    Log.e("asd", "List Screen")
+
     val uiState by listScreenVM.uiState.collectAsState()
 
     var isLoading by remember { mutableStateOf(false) }
@@ -103,7 +103,7 @@ fun Pokemon(
                     shape = RoundedCornerShape(50.dp)).clickable {
                         onClickNav("pokemon_info/$index")}
         ) {
-            AsyncImage(url = listScreenVM.returnImgLink(index+1))
+            AsyncImage(url = listScreenVM.returnImgLink((index+1).toString()))
         }
         Spacer(modifier = Modifier.height(5.dp))
         Text(text = text.uppercase(), fontSize = 12.sp)

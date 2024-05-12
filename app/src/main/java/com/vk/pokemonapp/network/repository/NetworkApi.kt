@@ -17,7 +17,7 @@ interface  NetworkApi {
 
 
 
-    @GET("pokemon/{pokemonId/}")
+    @GET("pokemon/{pokemonId}")
     fun getPokemon(
         @Path("pokemonId") pokemonId: String
     ): Call<PokemonInfoModel>
