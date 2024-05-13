@@ -61,7 +61,6 @@ fun PokemonCard(
     Scaffold(topBar = {
         Row (horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()){
 
-
             Button(onClick = { onClickNav("pokemon_list") }) {
                 Text(text = "Back")
 
@@ -96,6 +95,7 @@ fun PokemonCard(
             }
             Spacer(modifier = Modifier.height(5.dp))
             Text(text = model?.name!!.uppercase(), fontSize = 30.sp)
+            TypeRow(model?.types)
             PropertyList(model = model)
         }
     }

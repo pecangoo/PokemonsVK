@@ -2,6 +2,7 @@ package com.vk.pokemonapp.network.model
 
 import android.icu.text.ListFormatter.Width
 import com.google.gson.annotations.SerializedName
+import java.sql.Types
 
 
 data class StatResponse(
@@ -27,5 +28,21 @@ data class PokemonInfoModel(
     val id: Int,
     val height:String,
     val width:String,
-    val name:String
+    val name:String,
+    val types: List<Type>
+)
+
+
+data class Type(
+    @SerializedName("slot")
+    val slot: Int,
+    @SerializedName("type")
+    val type: TypeX
+)
+
+data class TypeX(
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("url")
+    val url: String
 )

@@ -1,6 +1,5 @@
 package com.vk.pokemonapp.presenter.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -117,6 +116,7 @@ fun Pokemon(
         }
         Spacer(modifier = Modifier.height(5.dp))
         Text(text = text.uppercase(), fontSize = 12.sp)
+        //ypeRow(model?.types)
     }
 }
 
