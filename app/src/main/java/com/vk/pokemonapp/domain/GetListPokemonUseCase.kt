@@ -10,7 +10,6 @@ class GetListPokemonUseCase {
     fun getPokemonList(repository: PokemonListRepository,
                        offset: Int,
                        limit: Int): PokemonListModel? {
-        Log.e("111", "Use Case get Pokemon List")
        return  repository
            .getList(offset = offset, limit = limit)
     }

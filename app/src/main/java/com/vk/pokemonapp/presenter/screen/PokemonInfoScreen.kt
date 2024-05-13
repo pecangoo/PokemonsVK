@@ -45,11 +45,7 @@ fun PokemonInfoScreen(
 
     }
 
-    // if (!uiState.loading) {
-    Log.e("111", "qwer");
     PokemonCard(uiState.pokemonInfoModel)
-    //}
-
 }
 
 @Composable

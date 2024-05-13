@@ -25,27 +25,37 @@ class PokemonListScreenVM(
     private val _uiState = MutableStateFlow(PokemonListUIState())
     val uiState: StateFlow<PokemonListUIState> = _uiState.asStateFlow()
 
-    fun updatePokemonList(isNew:Boolean = true) {
+    fun updatePokemonList(isNew: Boolean = true) {
 
-        if(!isNew) {
+        if (!isNew) {
             offset = offset + limit
         }
-        viewModelScope.launch (Dispatchers.IO)  {
-            val data = networkUseCase
-                .getPokemonList(
-                repository = repository,
-                offset = offset, limit = limit
-            )
-            _uiState.update { currentState ->
-                currentState.copy(
-                    listPokemon = currentState.listPokemon
-                            + Mappers.fromPokemonListModelToListPokemon(data!!)
-                )
+
+            viewModelScope.launch(Dispatchers.IO) {
+                val data = networkUseCase
+                    .getPokemonList(
+                        repository = repository,
+                        offset = offset, limit = limit
+                    )
+
+                if (data == null ) {
+                    _uiState.update { state ->
+                        state.copy(error = true)
+                    }
+                    return@launch
+                }
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        listPokemon = currentState.listPokemon
+                                + Mappers.fromPokemonListModelToListPokemon(data!!),
+                        error = false
+                    )
+                }
             }
-        }
+
     }
 
-    fun returnImgLink(id:String) : String {
+    fun returnImgLink(id: String): String {
         return LinkMaker.returnImgLink(id)
     }
 }

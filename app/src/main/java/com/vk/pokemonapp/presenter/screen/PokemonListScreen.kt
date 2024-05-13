@@ -1,5 +1,6 @@
 package com.vk.pokemonapp.presenter.screen
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +13,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -42,6 +45,13 @@ fun PokemonListScreen(listScreenVM: PokemonListScreenVM,
     }
     val items = uiState.listPokemon
 
+    if (uiState.error) {
+        // Error. Check Internet and press Update
+        Log.e("111", "Error Detected")
+        Error(listScreenVM);
+        return;
+    }
+
 
     LazyVerticalGrid (columns = GridCells.Fixed(3)){
         items(items.size) { index ->
@@ -69,6 +79,22 @@ fun PokemonListScreen(listScreenVM: PokemonListScreenVM,
 
 
 @Composable
+fun Error(listScreenVM: PokemonListScreenVM){
+    AlertDialog(
+        onDismissRequest = {},
+        confirmButton = { Button({
+            listScreenVM.updatePokemonList()
+        }) {
+                Text("OK", fontSize = 22.sp)
+            }},
+        text =  { Text("Проверьте соединение с интернетом и нажмите Ок)") },
+                title = { Text(text = "Ошибка") },
+
+
+    )
+}
+
+@Composable
 fun Pokemon(
     text: String,
     listScreenVM: PokemonListScreenVM,
@@ -82,10 +108,15 @@ fun Pokemon(
     ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier.size(100.dp)
-                .background(color = Color.LightGray,
-                    shape = RoundedCornerShape(50.dp)).clickable {
-                        onClickNav("pokemon_info/$index")}
+            modifier = Modifier
+                .size(100.dp)
+                .background(
+                    color = Color.LightGray,
+                    shape = RoundedCornerShape(50.dp)
+                )
+                .clickable {
+                    onClickNav("pokemon_info/$index")
+                }
         ) {
             AsyncImage(url = listScreenVM.returnImgLink((index+1).toString()))
         }

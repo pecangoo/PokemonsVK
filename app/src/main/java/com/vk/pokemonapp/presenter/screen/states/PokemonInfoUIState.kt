@@ -4,5 +4,6 @@ import com.vk.pokemonapp.network.model.PokemonInfoModel
 
 data class PokemonInfoUIState(
     var loading: Boolean = false,
+    var error: Boolean = false,
     var pokemonInfoModel: PokemonInfoModel? = null
 )

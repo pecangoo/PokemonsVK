@@ -22,7 +22,6 @@ class PokemonListRepository {
 
                 .execute()
             pokemonListModel =  response.body()
-          //  Log.e("111", "Error Response " + response.toString())
 
         } catch (valf:IOException){
             Log.e("111", "Error Response " + valf.toString())
@@ -41,12 +40,10 @@ class PokemonListRepository {
                 .execute()
 
             pokemonInfoModel =  response.body()
-            Log.e("111", "Error Response " + response.toString())
 
         } catch (valf:IOException){
             Log.e("111", "Error Response " + valf.toString())
         }
-        Log.e("111", pokemonInfoModel.toString())
         return pokemonInfoModel;
     }
 
