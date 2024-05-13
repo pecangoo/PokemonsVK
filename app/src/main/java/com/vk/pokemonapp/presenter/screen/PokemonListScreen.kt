@@ -1,7 +1,5 @@
 package com.vk.pokemonapp.presenter.screen
 
-import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberImagePainter
 
 import com.vk.pokemonapp.presenter.vm.PokemonListScreenVM
 
@@ -69,19 +66,6 @@ fun PokemonListScreen(listScreenVM: PokemonListScreenVM,
         }
     }
 }
-
-
-@Composable
-fun AsyncImage(url: String) {
-    val painter = rememberImagePainter(url)
-
-    Image(
-        painter = painter,
-        contentDescription = null,
-         modifier = Modifier.size(100.dp)
-    )
-}
-
 
 
 @Composable
