@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -46,8 +47,6 @@ fun PokemonListScreen(listScreenVM: PokemonListScreenVM,
     val items = uiState.listPokemon
 
     if (uiState.error) {
-        // Error. Check Internet and press Update
-        Log.e("111", "Error Detected")
         Error(listScreenVM);
         return;
     }
@@ -62,11 +61,9 @@ fun PokemonListScreen(listScreenVM: PokemonListScreenVM,
                     index,
                     onClickNav
                 )
-
-            // TODO : Добавить circilar?
             if (index == items.size - 1) {
                 if (isLoading) {
-                    Text(text = "Loading...")
+                    CircularProgressIndicator();
                 } else {
                     LaunchedEffect(true) {
                         listScreenVM.updatePokemonList(isNew = false)
@@ -89,8 +86,6 @@ fun Error(listScreenVM: PokemonListScreenVM){
             }},
         text =  { Text("Проверьте соединение с интернетом и нажмите Ок)") },
                 title = { Text(text = "Ошибка") },
-
-
     )
 }
 

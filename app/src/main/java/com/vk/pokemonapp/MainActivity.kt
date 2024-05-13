@@ -19,6 +19,7 @@ import com.vk.pokemonapp.domain.GetListPokemonUseCase
 import com.vk.pokemonapp.network.repository.PokemonListRepository
 import com.vk.pokemonapp.presenter.screen.PokemonInfoScreen
 import com.vk.pokemonapp.presenter.screen.PokemonListScreen
+import com.vk.pokemonapp.presenter.screen.SecretPage
 import com.vk.pokemonapp.presenter.vm.PokemonInfoScreenVM
 import com.vk.pokemonapp.presenter.vm.PokemonListScreenVM
 import com.vk.pokemonapp.presenter.vm.factory.PokemonInfoScreenVMFactory
@@ -75,7 +76,10 @@ class MainActivity : ComponentActivity() {
                             id ->
                            val pokemonId = id.arguments?.getString("id")
                             PokemonInfoScreen(infoScreenVM,
-                                id = pokemonId)
+                                id = pokemonId) { navController.navigate(it) };
+                        }
+                        composable("secret_page"){
+                            SecretPage()
                         }
                     }
 

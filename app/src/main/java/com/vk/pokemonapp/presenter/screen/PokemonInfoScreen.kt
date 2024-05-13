@@ -1,8 +1,6 @@
 package com.vk.pokemonapp.presenter.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,12 +27,12 @@ import com.vk.pokemonapp.network.model.PokemonInfoModel
 import com.vk.pokemonapp.presenter.Mappers
 import com.vk.pokemonapp.presenter.utils.LinkMaker
 import com.vk.pokemonapp.presenter.vm.PokemonInfoScreenVM
-import okhttp3.internal.wait
 
 @Composable
 fun PokemonInfoScreen(
     infoScreenVM: PokemonInfoScreenVM,
     id: String?,
+    onClickNav: (String) -> Unit
 ) {
     val uiState by infoScreenVM.uiState.collectAsState()
 
@@ -42,46 +42,62 @@ fun PokemonInfoScreen(
             infoScreenVM.getInfoPokemon(id)
         }
     } else {
-
+        return
     }
-
-    PokemonCard(uiState.pokemonInfoModel)
+    PokemonCard(uiState.pokemonInfoModel, onClickNav)
 }
 
 @Composable
 fun PokemonCard(
     model: PokemonInfoModel?,
+    onClickNav: (String) -> Unit,
 ) {
     if (model == null) {
-        Log.e("!11", "Model NULL")
-
+        //Log.e("!11", "Model NULL")
         return
     } else {
-        Log.e("!11", "Model not NULL")
+        // Log.e("!11", "Model not NULL")
     }
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top,
-        modifier = Modifier.padding(16.dp)
-    ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .size(300.dp)
-                .background(
-                    color = Color.Unspecified,
-                    shape = RoundedCornerShape(150.dp)
-                )
+    Scaffold(topBar = {
+        Row (horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()){
 
-        ) {
-            AsyncImage(
-                url = LinkMaker.returnImgLink((model?.id!! + 1).toString()),
-                size = 300
-            )
+
+            Button(onClick = { onClickNav("pokemon_list") }) {
+                Text(text = "Back")
+
+            }
+            Button(onClick = { onClickNav("secret_page") }) {
+                Text(text = "Press Me")
+
+            }
         }
-        Spacer(modifier = Modifier.height(5.dp))
-        Text(text = model?.name!!.uppercase(), fontSize = 30.sp)
-        PropertyList(model = model)
+    }) { it ->
+        it.toString()
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top,
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .size(300.dp)
+                    .background(
+                        color = Color.Unspecified,
+                        shape = RoundedCornerShape(150.dp)
+                    )
+
+            ) {
+                AsyncImage(
+                    url = LinkMaker.returnImgLink((model?.id!! + 1).toString()),
+                    size = 300
+                )
+            }
+            Spacer(modifier = Modifier.height(5.dp))
+            Text(text = model?.name!!.uppercase(), fontSize = 30.sp)
+            PropertyList(model = model)
+        }
     }
 }
 
@@ -89,18 +105,17 @@ fun PokemonCard(
 @Composable
 fun PropertyList(model: PokemonInfoModel?) {
     if (model == null) return
-    val listStat = Mappers.fromPokemonInfoModelToMapStat(model.stats);
+    val listStat =
+        Mappers.fromPokemonInfoModelToMapStat(model.stats);
 
-        Column() {
-            listStat.forEach { item ->
-                Row(horizontalArrangement = Arrangement.SpaceAround) {
-                    Text(text = "${item.name.uppercase()}: ")
-                    Text(text = "${item.base}")
-                }
-
-
+    Column() {
+        listStat.forEach { item ->
+            Row(horizontalArrangement = Arrangement.SpaceAround) {
+                Text(text = "${item.name.uppercase()}: ")
+                Text(text = "${item.base}")
             }
         }
+    }
 
 
 }
