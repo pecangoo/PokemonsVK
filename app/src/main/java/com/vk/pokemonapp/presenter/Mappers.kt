@@ -1,8 +1,8 @@
 package com.vk.pokemonapp.presenter
 
 
-import android.util.Log
 import com.vk.pokemonapp.network.model.PokemonListModel
+import com.vk.pokemonapp.presenter.model.PokemonLPNModel
 
 object Mappers {
     fun fromPokemonListModelToListPokemon(listModel: PokemonListModel)
@@ -20,5 +20,9 @@ object Mappers {
         }
         return listPokemon;
     }
+
+//    fun fromPokemonInfoModelToPokemonInfo()  {
+//
+//    }
 
 }

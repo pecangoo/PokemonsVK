@@ -1,4 +1,4 @@
-package com.vk.pokemonapp.presenter
+package com.vk.pokemonapp.presenter.model
 
 class PokemonLPNModel(val link:String,
     val picture:String,

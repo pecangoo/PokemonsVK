@@ -39,19 +39,27 @@ fun PokemonInfoScreen(
             infoScreenVM.getInfoPokemon(id)
         }
     } else {
-        // ERROR
+
     }
 
-    if (!uiState.loading) {
+   // if (!uiState.loading) {
         Log.e("111", "qwer");
         PokemonCard(uiState.pokemonInfoModel)
-    }
+    //}
+
 }
 
 @Composable
 fun PokemonCard(
     model: PokemonInfoModel?,
 ) {
+    if (model == null) {
+        Log.e("!11", "Model NULL")
+
+        return
+    } else {
+        Log.e("!11", "Model not NULL")
+    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,

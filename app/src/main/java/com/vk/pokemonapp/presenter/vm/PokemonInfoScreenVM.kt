@@ -25,16 +25,15 @@ class PokemonInfoScreenVM(
     fun getInfoPokemon(id:String) {
 
         viewModelScope.launch (Dispatchers.IO)  {
-            _uiState.emit(_uiState.value.copy(loading = true))
 
             uiState.value.loading = true;
-            getInfoPokemonUseCase.getPokemonInfo(repository = repository,
+            val data = getInfoPokemonUseCase.getPokemonInfo(repository = repository,
                 idPokemon = id)
 
             _uiState.update {
                  currentState ->
                     currentState.copy(
-                        pokemonInfoModel = currentState.pokemonInfoModel,
+                        pokemonInfoModel = data,
                         loading = false
                     )
             }

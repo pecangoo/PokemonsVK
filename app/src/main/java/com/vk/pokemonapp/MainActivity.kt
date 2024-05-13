@@ -38,7 +38,6 @@ class MainActivity : ComponentActivity() {
 
 
         super.onCreate(savedInstanceState)
-//
 
         listScreenVMFactory = PokemonListScreenVMFactory(
             GetListPokemonUseCase(),

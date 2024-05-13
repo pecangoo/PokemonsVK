@@ -38,7 +38,8 @@ class PokemonListScreenVM(
             )
             _uiState.update { currentState ->
                 currentState.copy(
-                    listPokemon = currentState.listPokemon + Mappers.fromPokemonListModelToListPokemon(data!!)
+                    listPokemon = currentState.listPokemon
+                            + Mappers.fromPokemonListModelToListPokemon(data!!)
                 )
             }
         }
